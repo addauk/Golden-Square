@@ -1,6 +1,6 @@
 require 'count_words'
 
-RSpec.describe do
+RSpec.describe "count_words method" do
   context "given an empty string" do
     it "returns 0" do
       expect(count_words("")).to eq 0

@@ -1,6 +1,6 @@
 require 'reading_time'
 
-RSpec.describe do
+RSpec.describe "reading_time method" do
   context "Given some text" do
     it "returns the time to read in seconds" do
       expect(reading_time("hello world")).to eq 0.6

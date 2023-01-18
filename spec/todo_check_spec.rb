@@ -1,6 +1,6 @@
 require 'todo_check'
 
-RSpec.describe do
+RSpec.describe "todo_check method" do
   context "Given some text that starts with `#TODO`" do
     
     it "Returns true" do

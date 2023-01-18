@@ -1,6 +1,6 @@
 require 'make_snippet'
 
-RSpec.describe do
+RSpec.describe "make_snippet method" do
   context "given a string of 5 words" do
     it "takes the first 5 words of a string" do
       expect(make_snippet("this is one fine story")).to eq "this is one fine story"

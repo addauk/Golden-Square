@@ -1,6 +1,6 @@
 require 'sentence_check'
 
-RSpec.describe do
+RSpec.describe "sentence_check method" do
   context "Given a sentence with a capital start and a punctuated end" do
     it "Returns true" do
       expect(sentence_check("Who are you?")).to eq true
