@@ -14,7 +14,7 @@ RSpec.describe "integration" do
 
   end
 
-  it "searches tracks by title" do
+  it "searches tracks by keyword" do
 
     music_library = MusicLibrary.new
     track_1 = Track.new("one two three","four five six")

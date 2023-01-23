@@ -13,7 +13,7 @@ RSpec.describe MusicLibrary do
 
   end
 
-  it "searches tracks by title" do
+  it "searches tracks by a keyword" do
 
     music_library = MusicLibrary.new
     track_1 = double :track
