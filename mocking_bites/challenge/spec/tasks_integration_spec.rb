@@ -22,9 +22,6 @@ RSpec.describe "tasks integration" do
     task_2.mark_complete
     expect(task_list.all_complete?).to eq true
   end
-<<<<<<< HEAD:mocking_bites/challenge/spec/tasks_integration_spec.rb
-end
-=======
 
   context "task is incomplete" do
     it "formats the task as a string" do
@@ -48,4 +45,3 @@ end
   end
   
 end
->>>>>>> 763a79b (created unit tests for peer classes and additional integration tests):phase_3_mocking_bites/mocking_bites_challenge/spec/tasks_integration_spec.rb
