@@ -10,8 +10,8 @@ class MessageSender
     message = @client.messages
       .create(
         body: "Thank you! Your order was placed and will be delivered before #{time}",
-        from: '+19598000939',
-        to: '+447971598411'
+        from: ENV['MY_TWILIO_NUM'],
+        to: ENV['MY_NUM']
       )
 
     #puts message.sid
