@@ -3,7 +3,7 @@ require_relative './order_item_formatter'
 require_relative './menu'
 require_relative './menu_item'
 require_relative './order'
-
+require_relative './message_sender'
 
 
 
@@ -133,6 +133,9 @@ class InteractiveOrderSystem
     if @order_items.empty?
       puts "Add items to order first" 
     else
+      MessageSender.send
+      @order_items = Order.new
+    end
 
   end
 
@@ -146,9 +149,9 @@ class InteractiveOrderSystem
   end
 end
 
-menu = Menu.new
-menu.add(MenuItem.new("Chips", 1.50))
-menu.add(MenuItem.new("Beef Burger", 5.25))
-menu.add(MenuItem.new("Salad", 3.00))
-ios = InteractiveOrderSystem.new(menu)
-ios.run
+# menu = Menu.new
+# menu.add(MenuItem.new("Chips", 1.50))
+# menu.add(MenuItem.new("Beef Burger", 5.25))
+# menu.add(MenuItem.new("Salad", 3.00))
+# ios = InteractiveOrderSystem.new(menu)
+# ios.run
