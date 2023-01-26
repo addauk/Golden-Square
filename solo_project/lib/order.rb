@@ -23,4 +23,8 @@ class Order
     end
   end
 
+  def empty?
+    return @order_items.empty?
+  end
+
 end

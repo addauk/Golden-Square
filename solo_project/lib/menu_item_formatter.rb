@@ -2,7 +2,7 @@ class MenuItemFormatter
 
   def self.format(item)
 
-    return "#{item.description} £#{item.cost}"
+    return "#{item.description} £#{'%.2f' %item.cost}"
 
   end
 

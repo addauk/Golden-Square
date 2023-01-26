@@ -1,11 +1,18 @@
-require 'menu_item_formatter'
+require_relative './menu_item_formatter'
+require_relative './order_item_formatter'
+require_relative './menu'
+require_relative './menu_item'
+require_relative './order'
+
+
+
 
 class InteractiveOrderSystem
 
-  def initialize(menu,io)
+  def initialize(menu)
 
     @menu = menu
-    @io = io
+    @order_items = Order.new
 
   end
 
@@ -16,7 +23,7 @@ class InteractiveOrderSystem
     until choice == "6"
 
       show_options
-      choice = @io.gets.chomp
+      choice = gets.chomp
 
       case choice
       when "1"
@@ -38,13 +45,13 @@ class InteractiveOrderSystem
         #Quitting
       else
 
-        @io.puts "You must choose from one of the available options"
+        puts "You must choose from one of the available options"
 
       end
 
     end
 
-    @io.puts "Goodbye"
+    puts "Goodbye"
   end
 
 
@@ -53,68 +60,95 @@ class InteractiveOrderSystem
 
   def show_options
 
-    @io.puts "Welcome to my restaurant"
-    @io.puts "Please choose from the following options:"
-    @io.puts "1. View menu"
-    @io.puts "2. Add to order"
-    @io.puts "3. Remove from order"
-    @io.puts "4. View order"
-    @io.puts "5. Complete order"
-    @io.puts "6. Quit"
+    puts "Welcome to my restaurant"
+    puts "Please choose from the following options:"
+    puts "1. View menu"
+    puts "2. Add to order"
+    puts "3. Remove from order"
+    puts "4. View order"
+    puts "5. Complete order"
+    puts "6. Quit"
 
   end
 
   def show_food_menu
 
-    @io.puts "This is the menu"
+    puts "This is the menu"
 
     place = 0
-    menu.each do |item| 
+    @menu.menu_items.each do |item| 
       place += 1
-      @io.puts "#{place} #{MenuItemFormatter.format(item)}"
+      puts "#{place}. #{MenuItemFormatter.format(item)}"
     end 
 
   end
 
-  def handle_add_choice(number)
-    @io.puts "Enter the desired item number"
+  def handle_add_choice
+    puts "Enter the desired item number"
     choice = get_number
-    if choice.defined? add_to_order(@menu_items[choice-1])
+    if defined?(choice) 
+      add_to_order(@menu.menu_items[choice-1])
+    end
   end
 
   def add_to_order(item)
     @order_items.add(item)
+    puts "#{item.description} removed"
   end
 
-  def handle_remove_choice(number)
-
+  def handle_remove_choice
+    if @order_items.empty? 
+      puts "Add items to order first" 
+    else
+      puts "Enter the desired item number"
+      choice = get_number
+      if defined?(choice) 
+        delete_from_order(@menu.menu_items[choice-1])
+      end
+    end
   end
 
   def delete_from_order(item)
     @order_items.delete(item)
+    puts "#{item.description} removed"
   end
 
   def show_order
-    @io.puts "Add items to order first" if @order_items.empty? 
-    place = 0
-    total = 0.0
-    @order_items.each do |key,value|
-      place += 1
-      @io.puts "#{place} #{OrderItemFormatter.format(key,value)}"
-      total += key.cost * value
+    if @order_items.empty? 
+      puts "Add items to order first" 
+       
+    else
+      place = 0
+      total = 0.0
+      @order_items.order_items.each do |key,value|
+        place += 1
+        puts "#{place}. #{OrderItemFormatter.format(key,value)}"
+        total += key.cost * value
+      end
+      puts "Current Total £#{'%.2f' % total}"
     end
-    @io.puts "Current Total £#{total}"
   end
 
   def complete_order
-    @io.puts "Add items to order first" if @order_items.empty?
+    if @order_items.empty?
+      puts "Add items to order first" 
+    else
 
   end
 
 
   def get_number
-    response = @io.gets
-    return response.to_i if response.to_i.to_s == response && response.to_i <= @menu_items.length && response.to_i > 0
-    fail "You must enter a valid number"
+    response = gets.chomp
+    if response.to_i.to_s == response && response.to_i <= @menu.menu_items.length && response.to_i > 0
+      return response.to_i 
+    end
+    puts "You must enter a valid number"
   end
 end
+
+menu = Menu.new
+menu.add(MenuItem.new("Chips", 1.50))
+menu.add(MenuItem.new("Beef Burger", 5.25))
+menu.add(MenuItem.new("Salad", 3.00))
+ios = InteractiveOrderSystem.new(menu)
+ios.run
